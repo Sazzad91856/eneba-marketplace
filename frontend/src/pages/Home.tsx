@@ -23,8 +23,12 @@ import Footer from "../components/Footer";
 
 import "../App.css";
 
-const API_URL = "http://localhost:8000/api/homepage.php";
-const BANNER_API_URL = "http://localhost:8000/api/banner.php";
+// Live PHP API addresses on Render
+const API_URL =
+  "https://eneba-marketplace-kb59.onrender.com/api/homepage.php";
+
+const BANNER_API_URL =
+  "https://eneba-marketplace-kb59.onrender.com/api/banner.php";
 
 interface HomepageApiResponse {
   success: boolean;
@@ -59,6 +63,8 @@ function Home() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    let isMounted = true;
+
     // FETCH BEST SELLERS AND SPECIAL OFFERS
     const fetchHomepageProducts = async () => {
       try {
@@ -79,6 +85,8 @@ function Home() {
           );
         }
 
+        if (!isMounted) return;
+
         setFeaturedProducts(
           (result.best_sellers || []).map(mapSupabaseProduct)
         );
@@ -86,12 +94,15 @@ function Home() {
         setOfferProducts(
           (result.special_offers || []).map(mapSupabaseProduct)
         );
-
       } catch (err) {
+        if (!isMounted) return;
+
         console.error("Homepage products error:", err);
         setError("Unable to load products. Please try again later.");
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
@@ -115,33 +126,38 @@ function Home() {
           );
         }
 
-        setBanner(result.banner);
+        if (!isMounted) return;
 
+        setBanner(result.banner);
       } catch (err) {
+        if (!isMounted) return;
+
         console.error("Homepage banner error:", err);
         setBannerError("Unable to load promotional banner.");
       } finally {
-        setBannerLoading(false);
+        if (isMounted) {
+          setBannerLoading(false);
+        }
       }
     };
 
     fetchHomepageProducts();
     fetchBanner();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
     <div className="app">
-
       {/* REUSABLE HEADER */}
       <Header />
 
       <main className="main-container">
-
         {/* DYNAMIC HERO BANNER */}
         <section className="hero">
-
           <div className="hero-content">
-
             <span className="hero-label">
               YOUR GAMING MARKETPLACE
             </span>
@@ -167,18 +183,15 @@ function Home() {
             ) : (
               <h1>No promotional banner available.</h1>
             )}
-
           </div>
 
           <div className="hero-decoration">
             <Gamepad2 size={150} strokeWidth={1} />
           </div>
-
         </section>
 
         {/* BENEFITS */}
         <section className="benefits">
-
           <div>
             <ShieldCheck />
             <span>Secure shopping</span>
@@ -193,14 +206,11 @@ function Home() {
             <Headphones />
             <span>Customer support</span>
           </div>
-
         </section>
 
         {/* BEST SELLERS */}
         <section className="product-section" id="store">
-
           <div className="section-heading">
-
             <div>
               <span className="section-label">
                 DISCOVER MORE
@@ -213,7 +223,6 @@ function Home() {
               View all
               <ChevronRight size={17} />
             </Link>
-
           </div>
 
           {loading ? (
@@ -224,24 +233,19 @@ function Home() {
             <p>No products available right now.</p>
           ) : (
             <div className="product-grid">
-
               {featuredProducts.map((product) => (
                 <ProductCard
                   key={product.id}
                   product={product}
                 />
               ))}
-
             </div>
           )}
-
         </section>
 
         {/* SPECIAL OFFERS */}
         <section className="product-section" id="deals">
-
           <div className="section-heading">
-
             <div>
               <span className="section-label">
                 DON'T MISS OUT
@@ -254,7 +258,6 @@ function Home() {
               View all
               <ChevronRight size={17} />
             </Link>
-
           </div>
 
           {loading ? (
@@ -265,24 +268,19 @@ function Home() {
             <p>No special offers available right now.</p>
           ) : (
             <div className="product-grid">
-
               {offerProducts.map((product) => (
                 <ProductCard
                   key={product.id}
                   product={product}
                 />
               ))}
-
             </div>
           )}
-
         </section>
-
       </main>
 
       {/* REUSABLE FOOTER */}
       <Footer />
-
     </div>
   );
 }
