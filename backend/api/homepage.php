@@ -1,13 +1,16 @@
 
 <?php
 
-header("Content-Type: application/json");
+ob_start();
+
+header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: http://localhost:5173");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     http_response_code(204);
+    ob_end_clean();
     exit;
 }
 
@@ -27,7 +30,7 @@ try {
 
     $pdo = getDatabaseConnection();
 
-    // Retrieve latest active products for Best Sellers
+    // Get active products for Best Sellers
     $bestSellersQuery = "
         SELECT
             id,
@@ -49,10 +52,11 @@ try {
         LIMIT 4
     ";
 
-    $bestSellersStatement = $pdo->query($bestSellersQuery);
-    $bestSellers = $bestSellersStatement->fetchAll();
+    $bestSellers = $pdo
+        ->query($bestSellersQuery)
+        ->fetchAll(PDO::FETCH_ASSOC);
 
-    // Retrieve discounted products for Special Offers
+    // Get discounted products for Special Offers
     $offersQuery = "
         SELECT
             id,
@@ -75,8 +79,9 @@ try {
         LIMIT 4
     ";
 
-    $offersStatement = $pdo->query($offersQuery);
-    $specialOffers = $offersStatement->fetchAll();
+    $specialOffers = $pdo
+        ->query($offersQuery)
+        ->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode([
         "success" => true,
