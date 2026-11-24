@@ -20,10 +20,9 @@ import {
 import ProductCard from "../components/ProductCard";
 import "../App.css";
 
-// PHP API address
-const API_URL = "http://localhost:8000/api/products.php";
-
-// Structure of the response received from PHP
+// Live PHP API address on Render
+const API_URL =
+  "https://eneba-marketplace-kb59.onrender.com/api/products.php";
 
 // Compare two words and return their Levenshtein edit distance.
 // This allows small spelling mistakes, such as "cyberpnk".
@@ -134,7 +133,7 @@ function Store() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
-  // Load products through the PHP REST API.
+  // Load products through the live PHP REST API.
   useEffect(() => {
     let isMounted = true;
 
@@ -164,7 +163,6 @@ function Store() {
         );
 
         setProducts(databaseProducts);
-
       } catch (err) {
         if (!isMounted) return;
 
@@ -177,7 +175,6 @@ function Store() {
         );
 
         setProducts([]);
-
       } finally {
         if (isMounted) {
           setLoading(false);
@@ -286,7 +283,6 @@ function Store() {
     <div className="app">
       <main className="main-container">
         <section className="product-section store-page">
-
           <div className="section-heading">
             <div>
               <span className="section-label">
@@ -299,7 +295,6 @@ function Store() {
           </div>
 
           <div className="store-toolbar">
-
             <div className="store-search">
               <Search size={19} />
 
@@ -326,11 +321,9 @@ function Store() {
 
               <ChevronDown size={16} />
             </div>
-
           </div>
 
           <div className="store-filter-panel">
-
             <div className="store-filter-heading">
               <h3>Filter products</h3>
 
@@ -347,7 +340,6 @@ function Store() {
             </div>
 
             <div className="store-filters">
-
               <div>
                 <label htmlFor="platform-filter">Platform</label>
 
@@ -411,7 +403,6 @@ function Store() {
                   onChange={(e) => setMaxPrice(e.target.value)}
                 />
               </div>
-
             </div>
           </div>
 
@@ -468,7 +459,6 @@ function Store() {
               </button>
             </div>
           )}
-
         </section>
       </main>
     </div>
