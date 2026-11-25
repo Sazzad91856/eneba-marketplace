@@ -12,6 +12,12 @@ import {
 import { useCart } from "../context/CartContext";
 import "../App.css";
 
+const API_BASE_URL =
+  "https://eneba-marketplace-kb59.onrender.com/api";
+
+const SESSION_API_URL = `${API_BASE_URL}/me.php`;
+const ORDER_API_URL = `${API_BASE_URL}/create-order.php`;
+
 function Checkout() {
   const { cartItems, cartCount, cartTotal } = useCart();
   const navigate = useNavigate();
@@ -39,7 +45,7 @@ function Checkout() {
 
     const checkSession = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/me.php", {
+        const response = await fetch(SESSION_API_URL, {
           method: "GET",
           credentials: "include",
         });
@@ -146,17 +152,14 @@ function Checkout() {
         })),
       };
 
-      const response = await fetch(
-        "http://localhost:8000/api/create-order.php",
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
+      const response = await fetch(ORDER_API_URL, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
 
       const result = await response.json();
 

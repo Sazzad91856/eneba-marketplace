@@ -1,18 +1,11 @@
+
 <?php
 
 ob_start();
 
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Methods: GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
 
-if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
-    http_response_code(204);
-    ob_end_clean();
-    exit;
-}
-
+require_once __DIR__ . "/../config/cors.php";
 require_once __DIR__ . "/../config/database.php";
 
 try {
@@ -92,9 +85,10 @@ try {
 
     http_response_code(500);
 
+    error_log("Homepage API error: " . $e->getMessage());
+
     echo json_encode([
         "success" => false,
-        "message" => "Unable to load homepage products",
-        "error" => $e->getMessage()
+        "message" => "Unable to load homepage products"
     ]);
 }

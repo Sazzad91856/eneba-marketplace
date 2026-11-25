@@ -24,8 +24,12 @@ import { useCart } from "../context/CartContext";
 
 import "../App.css";
 
-const API_URL = "http://localhost:8000/api/product.php";
-const OFFERS_API_URL = "http://localhost:8000/api/offers.php";
+// Live PHP API addresses on Render
+const API_URL =
+  "https://eneba-marketplace-kb59.onrender.com/api/product.php";
+
+const OFFERS_API_URL =
+  "https://eneba-marketplace-kb59.onrender.com/api/offers.php";
 
 interface ProductApiResponse {
   success: boolean;

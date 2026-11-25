@@ -12,6 +12,9 @@ import {
 
 import "../App.css";
 
+const API_URL =
+  "https://eneba-marketplace-kb59.onrender.com/api/my-orders.php";
+
 interface OrderItem {
   productId: string;
   productName: string;
@@ -47,13 +50,10 @@ function OrderHistory() {
     setError("");
 
     try {
-      const response = await fetch(
-        "http://localhost:8000/api/my-orders.php",
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(API_URL, {
+        method: "GET",
+        credentials: "include",
+      });
 
       const result = await response.json();
 

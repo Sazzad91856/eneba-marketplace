@@ -5,6 +5,9 @@ import { Gamepad2, Eye, EyeOff } from "lucide-react";
 
 import "../App.css";
 
+const API_URL =
+  "https://eneba-marketplace-kb59.onrender.com/api/register.php";
+
 function Register() {
   const navigate = useNavigate();
 
@@ -39,21 +42,18 @@ function Register() {
     try {
       setLoading(true);
 
-      const response = await fetch(
-        "http://localhost:8000/api/register.php",
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: name.trim(),
-            email: email.trim(),
-            password,
-          }),
-        }
-      );
+      const response = await fetch(API_URL, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          password,
+        }),
+      });
 
       const result = await response.json();
 

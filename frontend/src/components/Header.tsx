@@ -14,6 +14,12 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
+const API_BASE_URL =
+  "https://eneba-marketplace-kb59.onrender.com/api";
+
+const SESSION_API_URL = `${API_BASE_URL}/me.php`;
+const LOGOUT_API_URL = `${API_BASE_URL}/logout.php`;
+
 interface User {
   id: string;
   name: string;
@@ -33,13 +39,10 @@ function Header() {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8000/api/me.php",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
+        const response = await fetch(SESSION_API_URL, {
+          method: "GET",
+          credentials: "include",
+        });
 
         if (!response.ok) {
           setUser(null);
@@ -92,13 +95,10 @@ function Header() {
     setLoggingOut(true);
 
     try {
-      const response = await fetch(
-        "http://localhost:8000/api/logout.php",
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(LOGOUT_API_URL, {
+        method: "POST",
+        credentials: "include",
+      });
 
       const result = await response.json();
 
