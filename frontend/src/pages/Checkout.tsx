@@ -282,7 +282,8 @@ function Checkout() {
 
           <p>Add some games before proceeding to checkout.</p>
 
-          <Link to="/store" className="add-button">
+          {/* UPDATED: GO TO HOMEPAGE */}
+          <Link to="/" className="add-button">
             Explore games
           </Link>
         </div>

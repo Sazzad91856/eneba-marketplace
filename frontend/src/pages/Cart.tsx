@@ -26,9 +26,7 @@ function Cart() {
   return (
     <div className="app">
       <main className="main-container">
-
         <section className="cart-page">
-
           <div className="section-heading">
             <div>
               <span className="section-label">
@@ -53,31 +51,25 @@ function Cart() {
                 Looks like you haven't added any games yet.
               </p>
 
-              <Link to="/store" className="add-button">
+              <Link to="/" className="add-button">
                 Explore games
               </Link>
             </div>
           ) : (
-
             <div className="cart-layout">
-
               {/* CART ITEMS */}
               <div className="cart-items">
-
                 {cartItems.map((item) => (
-
                   <article
                     className="cart-item"
                     key={`${item.product.id}-${item.offerId || "standard"}`}
                   >
-
                     <img
                       src={item.product.image}
                       alt={item.product.name}
                     />
 
                     <div className="cart-item-info">
-
                       <span className="platform">
                         {item.product.platform}
                       </span>
@@ -105,7 +97,6 @@ function Cart() {
 
                       {/* QUANTITY CONTROLS */}
                       <div className="quantity-controls">
-
                         <button
                           type="button"
                           onClick={() =>
@@ -135,14 +126,11 @@ function Cart() {
                         >
                           <Plus size={15} />
                         </button>
-
                       </div>
-
                     </div>
 
                     {/* ITEM ACTIONS */}
                     <div className="cart-item-actions">
-
                       <strong>
                         €{(
                           item.product.price * item.quantity
@@ -162,26 +150,22 @@ function Cart() {
                       >
                         <Trash2 size={18} />
                       </button>
-
                     </div>
-
                   </article>
-
                 ))}
 
+                {/* BACK TO HOMEPAGE */}
                 <Link
-                  to="/store"
+                  to="/"
                   className="continue-shopping"
                 >
                   <ArrowLeft size={17} />
                   Continue shopping
                 </Link>
-
               </div>
 
               {/* ORDER SUMMARY */}
               <aside className="cart-summary">
-
                 <h3>Order Summary</h3>
 
                 <div className="summary-row">
@@ -219,15 +203,10 @@ function Cart() {
                   <ShieldCheck size={18} />
                   Secure shopping experience
                 </div>
-
               </aside>
-
             </div>
-
           )}
-
         </section>
-
       </main>
     </div>
   );
