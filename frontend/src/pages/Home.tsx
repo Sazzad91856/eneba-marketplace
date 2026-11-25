@@ -18,7 +18,6 @@ import {
 } from "../data/products";
 
 import ProductCard from "../components/ProductCard";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 import "../App.css";
@@ -151,9 +150,6 @@ function Home() {
 
   return (
     <div className="app">
-      {/* REUSABLE HEADER */}
-      <Header />
-
       <main className="main-container">
         {/* DYNAMIC HERO BANNER */}
         <section className="hero">

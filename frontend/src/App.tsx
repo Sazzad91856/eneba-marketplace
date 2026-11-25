@@ -1,4 +1,3 @@
-
 import {
   BrowserRouter,
   Routes,
@@ -13,11 +12,10 @@ import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import Wishlist from "./pages/Wishlist";
 import OrderHistory from "./pages/OrderHistory";
-
-// Authentication pages
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
+import Header from "./components/Header";
 import { CartProvider } from "./context/CartContext";
 import { WishlistProvider } from "./context/WishlistContext";
 
@@ -26,52 +24,18 @@ function App() {
     <WishlistProvider>
       <CartProvider>
         <BrowserRouter>
+          <Header />
           <Routes>
-
-            {/* Homepage */}
             <Route path="/" element={<Home />} />
-
-            {/* Store page */}
             <Route path="/store" element={<Store />} />
-
-            {/* Individual product details */}
-            <Route
-              path="/product/:id"
-              element={<ProductDetails />}
-            />
-
-            {/* Shopping cart */}
+            <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
-
-            {/* Wishlist page */}
             <Route path="/wishlist" element={<Wishlist />} />
-
-            {/* Order history */}
-            <Route
-              path="/orders"
-              element={<OrderHistory />}
-            />
-
-            {/* Checkout page */}
+            <Route path="/orders" element={<OrderHistory />} />
             <Route path="/checkout" element={<Checkout />} />
-
-            {/* Order confirmation page */}
-            <Route
-              path="/order-confirmation"
-              element={<OrderConfirmation />}
-            />
-
-            {/* Authentication pages */}
-            <Route
-              path="/login"
-              element={<Login />}
-            />
-
-            <Route
-              path="/register"
-              element={<Register />}
-            />
-
+            <Route path="/order-confirmation" element={<OrderConfirmation />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </BrowserRouter>
       </CartProvider>

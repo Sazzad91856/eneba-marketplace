@@ -19,7 +19,7 @@ const SESSION_API_URL = `${API_BASE_URL}/me.php`;
 const ORDER_API_URL = `${API_BASE_URL}/create-order.php`;
 
 function Checkout() {
-  const { cartItems, cartCount, cartTotal } = useCart();
+  const { cartItems, cartCount, cartTotal, clearCart } = useCart();
   const navigate = useNavigate();
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -244,6 +244,10 @@ function Checkout() {
         "latestOrder",
         JSON.stringify(order)
       );
+
+      // Clear the cart only after the backend confirms the order
+      // and the order details have been saved for confirmation/history.
+      clearCart();
 
       // Continue to order confirmation.
       navigate("/order-confirmation");

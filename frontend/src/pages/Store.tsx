@@ -289,8 +289,8 @@ function Store() {
                 GAMING MARKETPLACE
               </span>
 
-              <h2>Explore all games</h2>
-              <p>Discover your next favourite game.</p>
+              <h2>Explore games &amp; gift cards</h2>
+              <p>Discover games and digital gift cards across your favourite platforms.</p>
             </div>
           </div>
 
@@ -300,7 +300,7 @@ function Store() {
 
               <input
                 type="search"
-                placeholder="Search games, platforms or categories..."
+                placeholder="Search games, gift cards, platforms or categories..."
                 value={search}
                 onChange={(e) => handleSearchChange(e.target.value)}
               />
