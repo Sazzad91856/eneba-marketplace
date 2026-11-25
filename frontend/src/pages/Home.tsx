@@ -158,8 +158,10 @@ function Home() {
         {/* DYNAMIC HERO BANNER */}
         <section className="hero">
           <div className="hero-content">
+
+            {/* PERSONALIZED GAMING BRANDING */}
             <span className="hero-label">
-              YOUR GAMING MARKETPLACE
+              WELCOME TO SAZZAD'S GAMING WORLD
             </span>
 
             {bannerLoading ? (
@@ -168,6 +170,7 @@ function Home() {
               <h1>{bannerError}</h1>
             ) : banner ? (
               <>
+                {/* EXISTING DYNAMIC BANNER TITLE */}
                 <h1>{banner.title}</h1>
 
                 <p>{banner.subtitle}</p>
