@@ -37,6 +37,8 @@ function Header() {
 
   // CHECK PHP LOGIN SESSION
   useEffect(() => {
+    let isMounted = true;
+
     const checkSession = async () => {
       try {
         const response = await fetch(SESSION_API_URL, {
@@ -45,34 +47,55 @@ function Header() {
         });
 
         if (!response.ok) {
-          setUser(null);
-          localStorage.removeItem("user");
+          if (isMounted) {
+            setUser(null);
+            localStorage.removeItem("user");
+          }
           return;
         }
 
         const result = await response.json();
 
         if (result.success && result.user) {
-          setUser(result.user);
-
-          // Keep local user information for existing frontend features.
-          localStorage.setItem(
-            "user",
-            JSON.stringify(result.user)
-          );
+          if (isMounted) {
+            setUser(result.user);
+            localStorage.setItem(
+              "user",
+              JSON.stringify(result.user)
+            );
+          }
         } else {
-          setUser(null);
-          localStorage.removeItem("user");
+          if (isMounted) {
+            setUser(null);
+            localStorage.removeItem("user");
+          }
         }
       } catch (error) {
         console.error("Session check failed:", error);
-        setUser(null);
+
+        if (isMounted) {
+          setUser(null);
+        }
       } finally {
-        setAuthLoading(false);
+        if (isMounted) {
+          setAuthLoading(false);
+        }
       }
     };
 
     checkSession();
+
+    // Listen for successful login or logout.
+    const handleAuthChange = () => {
+      checkSession();
+    };
+
+    window.addEventListener("auth-change", handleAuthChange);
+
+    return () => {
+      isMounted = false;
+      window.removeEventListener("auth-change", handleAuthChange);
+    };
   }, []);
 
   // SEARCH PRODUCTS
@@ -81,9 +104,7 @@ function Header() {
 
     const query = searchQuery.trim();
 
-    if (!query) {
-      return;
-    }
+    if (!query) return;
 
     navigate(`/store?search=${encodeURIComponent(query)}`);
   };
@@ -103,13 +124,13 @@ function Header() {
       const result = await response.json();
 
       if (!response.ok || !result.success) {
-        throw new Error(
-          result.message || "Logout failed."
-        );
+        throw new Error(result.message || "Logout failed.");
       }
 
       setUser(null);
       localStorage.removeItem("user");
+
+      window.dispatchEvent(new Event("auth-change"));
 
       navigate("/", { replace: true });
 
@@ -128,7 +149,6 @@ function Header() {
 
   return (
     <>
-      {/* HEADER */}
       <header className="header">
         <div className="header-container">
 
@@ -153,7 +173,6 @@ function Header() {
 
           <div className="header-actions">
 
-            {/* WISHLIST */}
             <Link
               to="/wishlist"
               className="icon-button"
@@ -162,7 +181,6 @@ function Header() {
               <Heart size={21} />
             </Link>
 
-            {/* MY ORDERS */}
             <Link
               to="/orders"
               className="icon-button"
@@ -172,7 +190,6 @@ function Header() {
               <Receipt size={21} />
             </Link>
 
-            {/* SHOPPING CART */}
             <Link
               to="/cart"
               className="icon-button cart-icon"
@@ -187,7 +204,6 @@ function Header() {
               )}
             </Link>
 
-            {/* AUTHENTICATION */}
             {!authLoading && (
               user ? (
                 <>
@@ -216,18 +232,12 @@ function Header() {
                 </>
               ) : (
                 <>
-                  <Link
-                    to="/login"
-                    className="login-button"
-                  >
+                  <Link to="/login" className="login-button">
                     <UserRound size={18} />
                     Login
                   </Link>
 
-                  <Link
-                    to="/register"
-                    className="register-button"
-                  >
+                  <Link to="/register" className="register-button">
                     Register
                   </Link>
                 </>
@@ -238,7 +248,6 @@ function Header() {
         </div>
       </header>
 
-      {/* NAVIGATION */}
       <nav className="navigation">
         <div className="navigation-container">
 

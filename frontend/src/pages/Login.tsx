@@ -18,7 +18,6 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -50,10 +49,15 @@ function Login() {
         throw new Error(result.message || "Login failed.");
       }
 
-      // Save authenticated user information.
+      if (!result.user) {
+        throw new Error("Login succeeded but user information was not returned.");
+      }
+
       localStorage.setItem("user", JSON.stringify(result.user));
 
-      // Restore the originally requested page.
+      // Notify the shared Header that authentication has changed.
+      window.dispatchEvent(new Event("auth-change"));
+
       const routeDestination = location.state?.from;
       const savedDestination = sessionStorage.getItem(
         "redirectAfterLogin"
