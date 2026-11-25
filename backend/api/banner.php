@@ -1,12 +1,14 @@
 
 <?php
 
-header("Content-Type: application/json");
-
 require_once __DIR__ . "/../config/cors.php";
+
+header("Content-Type: application/json; charset=UTF-8");
+
 require_once __DIR__ . "/../config/database.php";
 
 try {
+    // Only GET requests are allowed.
     if ($_SERVER["REQUEST_METHOD"] !== "GET") {
         http_response_code(405);
 
@@ -20,6 +22,7 @@ try {
 
     $pdo = getDatabaseConnection();
 
+    // Retrieve the latest active promotional banner.
     $query = "
         SELECT
             id,
@@ -35,7 +38,7 @@ try {
 
     $statement = $pdo->query($query);
 
-    $banner = $statement->fetch();
+    $banner = $statement->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode([
         "success" => true,
