@@ -98,10 +98,13 @@ function OrderConfirmation() {
       <main className="main-container order-confirmation">
         <div className="confirmation-card no-order-card">
           <Package size={60} />
+
           <h1>No order found</h1>
+
           <p>You have not placed an order yet.</p>
 
-          <Link to="/store" className="confirmation-button">
+          {/* GO TO HOMEPAGE */}
+          <Link to="/" className="confirmation-button">
             <ShoppingBag size={18} />
             Explore games
             <ArrowRight size={18} />
@@ -331,9 +334,9 @@ function OrderConfirmation() {
           </p>
         </div>
 
-        {/* CONTINUE SHOPPING */}
+        {/* CONTINUE SHOPPING: GO TO HOMEPAGE */}
         <Link
-          to="/store"
+          to="/"
           className="confirmation-button"
         >
           <ShoppingBag size={18} />
