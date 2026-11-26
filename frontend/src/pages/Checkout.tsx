@@ -10,10 +10,8 @@ import {
 } from "lucide-react";
 
 import { useCart } from "../context/CartContext";
+import API_BASE_URL from "../lib/api";
 import "../App.css";
-
-const API_BASE_URL =
-  "https://eneba-marketplace-kb59.onrender.com/api";
 
 const SESSION_API_URL = `${API_BASE_URL}/me.php`;
 const ORDER_API_URL = `${API_BASE_URL}/create-order.php`;

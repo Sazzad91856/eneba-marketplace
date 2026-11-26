@@ -1,12 +1,13 @@
 
+import API_BASE_URL from "../lib/api";
+
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Gamepad2, Eye, EyeOff } from "lucide-react";
 
 import "../App.css";
 
-const API_URL =
-  "https://eneba-marketplace-kb59.onrender.com/api/register.php";
+const API_URL = `${API_BASE_URL}/register.php`;
 
 function Register() {
   const navigate = useNavigate();

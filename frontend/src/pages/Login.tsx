@@ -1,4 +1,6 @@
 
+import API_BASE_URL from "../lib/api";
+
 import { useState, type FormEvent } from "react";
 import {
   Link,
@@ -9,8 +11,7 @@ import { Gamepad2, Eye, EyeOff } from "lucide-react";
 
 import "../App.css";
 
-const API_URL =
-  "https://eneba-marketplace-kb59.onrender.com/api/login.php";
+const API_URL = `${API_BASE_URL}/login.php`;
 
 function Login() {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -49,15 +51,10 @@ function Login() {
         throw new Error(result.message || "Login failed.");
       }
 
-      if (!result.user) {
-        throw new Error("Login succeeded but user information was not returned.");
-      }
-
+      // Save authenticated user information.
       localStorage.setItem("user", JSON.stringify(result.user));
 
-      // Notify the shared Header that authentication has changed.
-      window.dispatchEvent(new Event("auth-change"));
-
+      // Restore the originally requested page.
       const routeDestination = location.state?.from;
       const savedDestination = sessionStorage.getItem(
         "redirectAfterLogin"

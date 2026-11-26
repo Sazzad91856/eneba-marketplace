@@ -11,9 +11,9 @@ import {
 } from "lucide-react";
 
 import "../App.css";
+import API_BASE_URL from "../lib/api";
 
-const API_URL =
-  "https://eneba-marketplace-kb59.onrender.com/api/my-orders.php";
+const API_URL = `${API_BASE_URL}/my-orders.php`;
 
 interface OrderItem {
   productId: string;
@@ -111,7 +111,7 @@ function OrderHistory() {
         <span className="section-label">YOUR ACCOUNT</span>
 
         <h1 style={{ marginTop: "10px" }}>
-          My Orders
+          Order History
         </h1>
 
         <p style={{ opacity: 0.75 }}>

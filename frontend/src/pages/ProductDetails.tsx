@@ -1,4 +1,6 @@
 
+import API_BASE_URL from "../lib/api";
+
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 
@@ -24,12 +26,10 @@ import { useCart } from "../context/CartContext";
 
 import "../App.css";
 
-// Live PHP API addresses on Render
-const API_URL =
-  "https://eneba-marketplace-kb59.onrender.com/api/product.php";
+// Shared PHP API addresses
+const API_URL = `${API_BASE_URL}/product.php`;
 
-const OFFERS_API_URL =
-  "https://eneba-marketplace-kb59.onrender.com/api/offers.php";
+const OFFERS_API_URL = `${API_BASE_URL}/offers.php`;
 
 interface ProductApiResponse {
   success: boolean;

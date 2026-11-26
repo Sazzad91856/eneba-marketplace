@@ -1,4 +1,6 @@
 
+import API_BASE_URL from "../lib/api";
+
 import { useEffect, useMemo, useState } from "react";
 
 import {
@@ -20,9 +22,8 @@ import {
 import ProductCard from "../components/ProductCard";
 import "../App.css";
 
-// Live PHP API address on Render
-const API_URL =
-  "https://eneba-marketplace-kb59.onrender.com/api/products.php";
+// Shared PHP API address
+const API_URL = `${API_BASE_URL}/products.php`;
 
 // Compare two words and return their Levenshtein edit distance.
 // This allows small spelling mistakes, such as "cyberpnk".
@@ -133,7 +134,7 @@ function Store() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
-  // Load products through the live PHP REST API.
+  // Load products through the PHP REST API.
   useEffect(() => {
     let isMounted = true;
 

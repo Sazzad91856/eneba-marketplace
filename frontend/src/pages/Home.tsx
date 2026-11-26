@@ -1,4 +1,6 @@
 
+import API_BASE_URL from "../lib/api";
+
 import { useEffect, useState } from "react";
 
 import {
@@ -22,12 +24,10 @@ import Footer from "../components/Footer";
 
 import "../App.css";
 
-// Live PHP API addresses on Render
-const API_URL =
-  "https://eneba-marketplace-kb59.onrender.com/api/homepage.php";
+// Shared PHP API addresses
+const API_URL = `${API_BASE_URL}/homepage.php`;
 
-const BANNER_API_URL =
-  "https://eneba-marketplace-kb59.onrender.com/api/banner.php";
+const BANNER_API_URL = `${API_BASE_URL}/banner.php`;
 
 interface HomepageApiResponse {
   success: boolean;
