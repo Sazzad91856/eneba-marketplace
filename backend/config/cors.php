@@ -1,4 +1,3 @@
-
 <?php
 
 function configureCors(): void
@@ -8,6 +7,7 @@ function configureCors(): void
         "http://127.0.0.1:5173",
         "http://localhost:5174",
         "http://127.0.0.1:5174",
+        "https://eneba-marketplace-1-rpb4.onrender.com",
     ];
 
     $frontendUrl = getenv("FRONTEND_URL");
@@ -27,9 +27,7 @@ function configureCors(): void
     header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-    $requestMethod = $_SERVER["REQUEST_METHOD"] ?? "GET";
-
-    if ($requestMethod === "OPTIONS") {
+    if (($_SERVER["REQUEST_METHOD"] ?? "GET") === "OPTIONS") {
         http_response_code(204);
         exit;
     }
